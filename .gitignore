@@ -1,0 +1,13 @@
+/.coverage
+/html/
+/htmlcov/
+/.idea
+/.mutmut-cache
+/.mypy_cache
+/mutmut.xml
+*.pyc
+__pycache__
+/.pytest_cache
+Thumbs.db
+/.venv
+/.vscode
