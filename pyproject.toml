@@ -42,6 +42,8 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.7"
 typer = "*"
+aws-cdk-lib = "*"
+constructs = "*"
 
 [tool.poetry.dev-dependencies]
 black = "*"

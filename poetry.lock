@@ -39,7 +39,7 @@ wrapt = ">=1.11,<2"
 name = "attrs"
 version = "22.2.0"
 description = "Classes Without Boilerplate"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -53,6 +53,78 @@ dev = ["attrs[docs,tests]"]
 docs = ["furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-towncrier", "towncrier", "zope.interface"]
 tests = ["attrs[tests-no-zope]", "zope.interface"]
 tests-no-zope = ["cloudpickle", "cloudpickle", "hypothesis", "hypothesis", "mypy (>=0.971,<0.990)", "mypy (>=0.971,<0.990)", "pympler", "pympler", "pytest (>=4.3.0)", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-mypy-plugins", "pytest-xdist[psutil]", "pytest-xdist[psutil]"]
+
+[[package]]
+name = "aws-cdk-asset-awscli-v1"
+version = "2.2.61"
+description = "A library that contains the AWS CLI for use in Lambda Layers"
+category = "main"
+optional = false
+python-versions = "~=3.7"
+files = [
+    {file = "aws-cdk.asset-awscli-v1-2.2.61.tar.gz", hash = "sha256:2cf2e4907c1b1316529bf93c841095be824c60b80761cbec509d329834cbc9f9"},
+    {file = "aws_cdk.asset_awscli_v1-2.2.61-py3-none-any.whl", hash = "sha256:fb1fd91512a4d72594f490bd96a346d791d51dfbe80363496c411c5a8214012a"},
+]
+
+[package.dependencies]
+jsii = ">=1.74.0,<2.0.0"
+publication = ">=0.0.3"
+typeguard = ">=2.13.3,<2.14.0"
+
+[[package]]
+name = "aws-cdk-asset-kubectl-v20"
+version = "2.1.1"
+description = "A library that contains kubectl for use in Lambda Layers"
+category = "main"
+optional = false
+python-versions = "~=3.7"
+files = [
+    {file = "aws-cdk.asset-kubectl-v20-2.1.1.tar.gz", hash = "sha256:9834cdb150c5590aea4e5eba6de2a89b4c60617451181c524810c5a75154565c"},
+    {file = "aws_cdk.asset_kubectl_v20-2.1.1-py3-none-any.whl", hash = "sha256:a2fad1a5a35a94a465efe60859f91e45dacc33261fb9bbf1cf9bbc6e2f70e9d6"},
+]
+
+[package.dependencies]
+jsii = ">=1.70.0,<2.0.0"
+publication = ">=0.0.3"
+typeguard = ">=2.13.3,<2.14.0"
+
+[[package]]
+name = "aws-cdk-asset-node-proxy-agent-v5"
+version = "2.0.50"
+description = "@aws-cdk/asset-node-proxy-agent-v5"
+category = "main"
+optional = false
+python-versions = "~=3.7"
+files = [
+    {file = "aws-cdk.asset-node-proxy-agent-v5-2.0.50.tar.gz", hash = "sha256:e60f1e28530756704fa6224d896c16561580590db5a2c6a8ee59424c3b163f48"},
+    {file = "aws_cdk.asset_node_proxy_agent_v5-2.0.50-py3-none-any.whl", hash = "sha256:4961e06d3b18be718585bd56921b20f9648aed6d9a20cae7c0f2d73340dde0be"},
+]
+
+[package.dependencies]
+jsii = ">=1.74.0,<2.0.0"
+publication = ">=0.0.3"
+typeguard = ">=2.13.3,<2.14.0"
+
+[[package]]
+name = "aws-cdk-lib"
+version = "2.55.1"
+description = "Version 2 of the AWS Cloud Development Kit library"
+category = "main"
+optional = false
+python-versions = "~=3.7"
+files = [
+    {file = "aws-cdk-lib-2.55.1.tar.gz", hash = "sha256:b9a4d7696af52bd42209c16fe94b2721cbb339fae36de56a035d884178d59ce7"},
+    {file = "aws_cdk_lib-2.55.1-py3-none-any.whl", hash = "sha256:93c06ba840e580ff07ce9c15534f8161946b0cd90442f867c8bf0ea223710458"},
+]
+
+[package.dependencies]
+"aws-cdk.asset-awscli-v1" = ">=2.2.30,<3.0.0"
+"aws-cdk.asset-kubectl-v20" = ">=2.1.1,<3.0.0"
+"aws-cdk.asset-node-proxy-agent-v5" = ">=2.0.38,<3.0.0"
+constructs = ">=10.0.0,<11.0.0"
+jsii = ">=1.72.0,<2.0.0"
+publication = ">=0.0.3"
+typeguard = ">=2.13.3,<2.14.0"
 
 [[package]]
 name = "black"
@@ -104,6 +176,23 @@ colorama = ["colorama (>=0.4.3)"]
 d = ["aiohttp (>=3.7.4)"]
 jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
 uvloop = ["uvloop (>=0.15.2)"]
+
+[[package]]
+name = "cattrs"
+version = "22.2.0"
+description = "Composable complex class support for attrs and dataclasses."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "cattrs-22.2.0-py3-none-any.whl", hash = "sha256:bc12b1f0d000b9f9bee83335887d532a1d3e99a833d1bf0882151c97d3e68c21"},
+    {file = "cattrs-22.2.0.tar.gz", hash = "sha256:f0eed5642399423cf656e7b66ce92cdc5b963ecafd041d1b24d136fdde7acf6d"},
+]
+
+[package.dependencies]
+attrs = ">=20"
+exceptiongroup = {version = "*", markers = "python_version < \"3.11\""}
+typing_extensions = {version = "*", markers = "python_version < \"3.8\""}
 
 [[package]]
 name = "certifi"
@@ -209,6 +298,23 @@ importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
 testing = ["flake8", "pytest", "pytest-cov", "pytest-virtualenv", "pytest-xdist", "sphinx"]
 
 [[package]]
+name = "constructs"
+version = "10.1.244"
+description = "A programming model for software-defined state"
+category = "main"
+optional = false
+python-versions = "~=3.7"
+files = [
+    {file = "constructs-10.1.244-py3-none-any.whl", hash = "sha256:cb095f49622fc6a2ad4fccb4270c76b7849a7f57c29024b2a0c1233057a67b1d"},
+    {file = "constructs-10.1.244.tar.gz", hash = "sha256:cc0da824d4eeee35f849149900669eee93c493341b33000b45de37150d4f20ea"},
+]
+
+[package.dependencies]
+jsii = ">=1.74.0,<2.0.0"
+publication = ">=0.0.3"
+typeguard = ">=2.13.3,<2.14.0"
+
+[[package]]
 name = "coverage"
 version = "7.1.0"
 description = "Code coverage measurement for Python"
@@ -303,7 +409,7 @@ files = [
 name = "exceptiongroup"
 version = "1.1.0"
 description = "Backport of PEP 654 (exception groups)"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -462,6 +568,26 @@ colors = ["colorama (>=0.4.3,<0.5.0)"]
 pipfile-deprecated-finder = ["pip-shims (>=0.5.2)", "pipreqs", "requirementslib"]
 plugins = ["setuptools"]
 requirements-deprecated-finder = ["pip-api", "pipreqs"]
+
+[[package]]
+name = "jsii"
+version = "1.74.0"
+description = "Python client for jsii runtime"
+category = "main"
+optional = false
+python-versions = "~=3.7"
+files = [
+    {file = "jsii-1.74.0-py3-none-any.whl", hash = "sha256:ee76781fe66106c367fbb3bb383db4f5e9b8ff3d3c4c0f34624c050211f040be"},
+    {file = "jsii-1.74.0.tar.gz", hash = "sha256:575131396ad34f8f6e9f2604953ecbf4f3368625656a828b13089e4abb81b443"},
+]
+
+[package.dependencies]
+attrs = ">=21.2,<23.0"
+cattrs = ">=1.8,<22.3"
+publication = ">=0.0.3"
+python-dateutil = "*"
+typeguard = ">=2.13.3,<2.14.0"
+typing-extensions = ">=3.7,<5.0"
 
 [[package]]
 name = "junit-xml"
@@ -747,6 +873,18 @@ pyyaml = ">=5.1"
 virtualenv = ">=20.10.0"
 
 [[package]]
+name = "publication"
+version = "0.0.3"
+description = "Publication helps you maintain public-api-friendly modules by preventing unintentional access to private implementation details via introspection."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "publication-0.0.3-py2.py3-none-any.whl", hash = "sha256:0248885351febc11d8a1098d5c8e3ab2dabcf3e8c0c96db1e17ecd12b53afbe6"},
+    {file = "publication-0.0.3.tar.gz", hash = "sha256:68416a0de76dddcdd2930d1c8ef853a743cc96c82416c4e4d3b5d901c6276dc4"},
+]
+
+[[package]]
 name = "pylint"
 version = "2.13.9"
 description = "python code static checker"
@@ -816,7 +954,7 @@ pytest = "*"
 name = "python-dateutil"
 version = "2.8.2"
 description = "Extensions to the standard Python datetime module"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
 files = [
@@ -934,7 +1072,6 @@ files = [
     {file = "ruamel.yaml.clib-0.2.7-cp310-cp310-win_amd64.whl", hash = "sha256:d000f258cf42fec2b1bbf2863c61d7b8918d31ffee905da62dede869254d3b8a"},
     {file = "ruamel.yaml.clib-0.2.7-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:045e0626baf1c52e5527bd5db361bc83180faaba2ff586e763d3d5982a876a9e"},
     {file = "ruamel.yaml.clib-0.2.7-cp311-cp311-macosx_12_6_arm64.whl", hash = "sha256:721bc4ba4525f53f6a611ec0967bdcee61b31df5a56801281027a3a6d1c2daf5"},
-    {file = "ruamel.yaml.clib-0.2.7-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:41d0f1fa4c6830176eef5b276af04c89320ea616655d01327d5ce65e50575c94"},
     {file = "ruamel.yaml.clib-0.2.7-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:4b3a93bb9bc662fc1f99c5c3ea8e623d8b23ad22f861eb6fce9377ac07ad6072"},
     {file = "ruamel.yaml.clib-0.2.7-cp36-cp36m-macosx_12_0_arm64.whl", hash = "sha256:a234a20ae07e8469da311e182e70ef6b199d0fbeb6c6cc2901204dd87fb867e8"},
     {file = "ruamel.yaml.clib-0.2.7-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:15910ef4f3e537eea7fe45f8a5d19997479940d9196f357152a09031c5be59f3"},
@@ -995,7 +1132,7 @@ files = [
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 files = [
@@ -1087,6 +1224,22 @@ files = [
     {file = "typed_ast-1.5.4-cp39-cp39-win_amd64.whl", hash = "sha256:0fdbcf2fef0ca421a3f5912555804296f0b0960f0418c440f5d6d3abb549f3e1"},
     {file = "typed_ast-1.5.4.tar.gz", hash = "sha256:39e21ceb7388e4bb37f4c679d72707ed46c2fbf2a5609b8b8ebc4b067d977df2"},
 ]
+
+[[package]]
+name = "typeguard"
+version = "2.13.3"
+description = "Run-time type checker for Python"
+category = "main"
+optional = false
+python-versions = ">=3.5.3"
+files = [
+    {file = "typeguard-2.13.3-py3-none-any.whl", hash = "sha256:5e3e3be01e887e7eafae5af63d1f36c849aaa94e3a0112097312aabfa16284f1"},
+    {file = "typeguard-2.13.3.tar.gz", hash = "sha256:00edaa8da3a133674796cf5ea87d9f4b4c367d77476e185e80251cc13dfbb8c4"},
+]
+
+[package.extras]
+doc = ["sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme"]
+test = ["mypy", "pytest", "typing-extensions"]
 
 [[package]]
 name = "typer"
@@ -1253,4 +1406,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "27a4e4061e412a586a78ebe1c452d99ee441a0ea8cf780aaf5815a0f6ae9e136"
+content-hash = "a7c8934fce9ceff6ad2b30547690a7e774368f91c66f8f852bf6b4e6b732e39e"

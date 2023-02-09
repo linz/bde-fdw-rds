@@ -1,0 +1,47 @@
+{
+  "app": "python3 app.py",
+  "watch": {
+    "include": ["**"],
+    "exclude": ["README.md", "cdk*.json", "**/__init__.py", "tests"]
+  },
+  "context": {
+    "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
+    "@aws-cdk/core:checkSecretUsage": true,
+    "@aws-cdk/core:target-partitions": ["aws", "aws-cn"],
+    "@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver": true,
+    "@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": true,
+    "@aws-cdk/aws-ecs:arnFormatIncludesClusterName": true,
+    "@aws-cdk/aws-iam:minimizePolicies": true,
+    "@aws-cdk/core:validateSnapshotRemovalPolicy": true,
+    "@aws-cdk/aws-codepipeline:crossAccountKeyAliasStackSafeResourceName": true,
+    "@aws-cdk/aws-s3:createDefaultLoggingPolicy": true,
+    "@aws-cdk/aws-sns-subscriptions:restrictSqsDescryption": true,
+    "@aws-cdk/aws-apigateway:disableCloudWatchRole": true,
+    "@aws-cdk/core:enablePartitionLiterals": true,
+    "@aws-cdk/aws-events:eventsTargetQueueSameAccount": true,
+    "@aws-cdk/aws-iam:standardizedServicePrincipals": true,
+    "@aws-cdk/aws-ecs:disableExplicitDeploymentControllerForCircuitBreaker": true,
+    "available_environments": {
+      "prod": {
+        "account_id": "167241006131",
+        "region": "ap-southeast-2",
+        "vpc_id": "vpc-23487b47",
+        "subnets": ["subnet-51844336", "subnet-a6a85fef", "subnet-98f2a8c1"],
+        "bde_host": "bde-processor-db.cnta12almaey.ap-southeast-2.rds.amazonaws.com",
+        "bde_ro_user": "read_only_user"
+      },
+      "non-prod": {
+        "account_id": "750833841965",
+        "region": "ap-southeast-2",
+        "vpc_id": "vpc-0fb6a7defd5693aa8",
+        "subnets": [
+          "subnet-06ff7dbe6da04cdde",
+          "subnet-04865c78665fdf874",
+          "subnet-0e90f0bcba6cb7453"
+        ],
+        "bde_host": "bde-processor-db-test.cnta12almaey.ap-southeast-2.rds.amazonaws.com",
+        "bde_ro_user": "read_only_user"
+      }
+    }
+  }
+}
