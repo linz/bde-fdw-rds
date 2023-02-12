@@ -19,6 +19,8 @@ aws_region = deployment_environment.get("region")
 aws_vpc_id = deployment_environment.get("vpc_id")
 aws_subnets = deployment_environment.get("subnets")
 
+rds_fdw_instance_type = deployment_environment.get("rds_fdw_instance_type")
+
 cdk_env = cdk.Environment(account=aws_account, region=aws_region)
 
 Application(
@@ -26,8 +28,10 @@ Application(
     "BdeFdwRdsStack",
     description="Provision AWS Postgres RDS with FDW, to query BDE Processor RDS.",
     env=cdk_env,
+    deployment_env=deployment_environment,
     vpc_id=aws_vpc_id,
     subnet_ids=aws_subnets,
+    rds_fdw_instance_type=rds_fdw_instance_type,
 )
 
 

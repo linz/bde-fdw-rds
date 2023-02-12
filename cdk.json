@@ -27,6 +27,7 @@
         "region": "ap-southeast-2",
         "vpc_id": "vpc-23487b47",
         "subnets": ["subnet-51844336", "subnet-a6a85fef", "subnet-98f2a8c1"],
+        "rds_fdw_instance_type": { "class": "BURSTABLE3", "size": "SMALL" },
         "bde_host": "bde-processor-db.cnta12almaey.ap-southeast-2.rds.amazonaws.com",
         "bde_ro_user": "read_only_user"
       },
@@ -39,6 +40,7 @@
           "subnet-04865c78665fdf874",
           "subnet-0e90f0bcba6cb7453"
         ],
+        "rds_fdw_instance_type": { "class": "BURSTABLE3", "size": "MICRO" },
         "bde_host": "bde-processor-db-test.cnta12almaey.ap-southeast-2.rds.amazonaws.com",
         "bde_ro_user": "read_only_user"
       }
