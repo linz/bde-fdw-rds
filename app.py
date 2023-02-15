@@ -23,15 +23,20 @@ rds_fdw_instance_type = deployment_environment.get("rds_fdw_instance_type")
 
 cdk_env = cdk.Environment(account=aws_account, region=aws_region)
 
+bde_host_name = deployment_environment.get("bde_host_name")
+bde_analytics_user_secret = deployment_environment.get("bde_analytics_user_secret")
+
+
 Application(
     app,
     "BdeFdwRdsStack",
     description="Provision AWS Postgres RDS with FDW, to query BDE Processor RDS.",
     env=cdk_env,
-    deployment_env=deployment_environment,
     vpc_id=aws_vpc_id,
     subnet_ids=aws_subnets,
     rds_fdw_instance_type=rds_fdw_instance_type,
+    bde_host_name=bde_host_name,
+    bde_analytics_user_secret=bde_analytics_user_secret,
 )
 
 

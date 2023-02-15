@@ -1,10 +1,12 @@
 /.coverage
+/cdk.out/
 /html/
 /htmlcov/
 /.idea
 /.mutmut-cache
 /.mypy_cache
 /mutmut.xml
+/lambda_functions/.out
 *.pyc
 __pycache__
 /.pytest_cache
