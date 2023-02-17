@@ -299,18 +299,18 @@ testing = ["flake8", "pytest", "pytest-cov", "pytest-virtualenv", "pytest-xdist"
 
 [[package]]
 name = "constructs"
-version = "10.1.247"
+version = "10.1.252"
 description = "A programming model for software-defined state"
 category = "main"
 optional = false
 python-versions = "~=3.7"
 files = [
-    {file = "constructs-10.1.247-py3-none-any.whl", hash = "sha256:809ed229a2404e72991698daf73f9fb6bcce6c0785e072420a82c80ecdfc7624"},
-    {file = "constructs-10.1.247.tar.gz", hash = "sha256:1f99a59c1b54c4ffcee929b8b612841059e9d903a6fc5e778e9573217243842d"},
+    {file = "constructs-10.1.252-py3-none-any.whl", hash = "sha256:cf115fe7729c93ce01b1839e8760be24606c694b96b628230711cbf9b8fa1acd"},
+    {file = "constructs-10.1.252.tar.gz", hash = "sha256:1ee8f4a11c4515730dff1de9c40342dd37bd7bd5f5650a500c06a22954e373a2"},
 ]
 
 [package.dependencies]
-jsii = ">=1.74.0,<2.0.0"
+jsii = ">=1.75.0,<2.0.0"
 publication = ">=0.0.3"
 typeguard = ">=2.13.3,<2.14.0"
 
@@ -571,14 +571,14 @@ requirements-deprecated-finder = ["pip-api", "pipreqs"]
 
 [[package]]
 name = "jsii"
-version = "1.74.0"
+version = "1.75.0"
 description = "Python client for jsii runtime"
 category = "main"
 optional = false
 python-versions = "~=3.7"
 files = [
-    {file = "jsii-1.74.0-py3-none-any.whl", hash = "sha256:ee76781fe66106c367fbb3bb383db4f5e9b8ff3d3c4c0f34624c050211f040be"},
-    {file = "jsii-1.74.0.tar.gz", hash = "sha256:575131396ad34f8f6e9f2604953ecbf4f3368625656a828b13089e4abb81b443"},
+    {file = "jsii-1.75.0-py3-none-any.whl", hash = "sha256:0a36266470e223413f5e3b10ab656bb0a9c8a8902aa180a0c1ebcc93cc15cfce"},
+    {file = "jsii-1.75.0.tar.gz", hash = "sha256:87ecc63fdd7e972ae35f25e0804d86ce6f56871f1f4b0dc4e620d3e9fe761912"},
 ]
 
 [package.dependencies]
