@@ -29,7 +29,7 @@
         "subnets": ["subnet-51844336", "subnet-a6a85fef", "subnet-98f2a8c1"],
         "rds_fdw_instance_type": { "class": "BURSTABLE3", "size": "SMALL" },
         "bde_host": "bde-processor-db.cnta12almaey.ap-southeast-2.rds.amazonaws.com",
-        "bde_ro_user": "read_only_user"
+        "bde_analytics_user_secret": "prod/bde/fdw_analytics"
       },
       "non-prod": {
         "account_id": "750833841965",
@@ -42,7 +42,7 @@
         ],
         "rds_fdw_instance_type": { "class": "BURSTABLE3", "size": "MICRO" },
         "bde_host": "bde-processor-db-test.cnta12almaey.ap-southeast-2.rds.amazonaws.com",
-        "bde_ro_user": "read_only_user"
+        "bde_analytics_user_secret": "prod/bde/fdw_analytics"
       }
     }
   }

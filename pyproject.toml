@@ -40,10 +40,12 @@ authors = [
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.9"
 typer = "*"
 aws-cdk-lib = "*"
 constructs = "*"
+aws-lambda-powertools = "2.8.0"
+psycopg2-binary = "2.9.5"
 
 [tool.poetry.dev-dependencies]
 black = "*"
@@ -58,13 +60,13 @@ pylint = "*"
 pytest = "*"
 pytest-randomly = "*"
 typed-ast = "*"
+types-psycopg2 = "*"
 
 [tool.pylint.FORMAT]
 max-line-length = 127
 
 [tool.pylint.MASTER]
 disable = [
-    "bad-continuation",
     "duplicate-code",
     "invalid-name",
     "missing-docstring",
