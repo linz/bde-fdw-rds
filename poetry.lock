@@ -107,22 +107,22 @@ typeguard = ">=2.13.3,<2.14.0"
 
 [[package]]
 name = "aws-cdk-lib"
-version = "2.65.0"
+version = "2.66.0"
 description = "Version 2 of the AWS Cloud Development Kit library"
 category = "main"
 optional = false
 python-versions = "~=3.7"
 files = [
-    {file = "aws-cdk-lib-2.65.0.tar.gz", hash = "sha256:7d2ea69f827b7f325567109c482ead017f5d2e0fc071d4b352f5db87c24ba010"},
-    {file = "aws_cdk_lib-2.65.0-py3-none-any.whl", hash = "sha256:ea12088a72b858a9bf1aaaf0f6de5e6dfe5962b382324239eb7c830327b84f7c"},
+    {file = "aws-cdk-lib-2.66.0.tar.gz", hash = "sha256:a385b7bad334a13db354b36c918ac6c9917356be7fecc4c39d0f1cb99eeaa0ac"},
+    {file = "aws_cdk_lib-2.66.0-py3-none-any.whl", hash = "sha256:28cfa3d97a0d2278c4e8daf3ab368010a0997bc7e738d9d1b9d3681da5983bf1"},
 ]
 
 [package.dependencies]
-"aws-cdk.asset-awscli-v1" = ">=2.2.65,<3.0.0"
+"aws-cdk.asset-awscli-v1" = ">=2.2.69,<3.0.0"
 "aws-cdk.asset-kubectl-v20" = ">=2.1.1,<3.0.0"
-"aws-cdk.asset-node-proxy-agent-v5" = ">=2.0.54,<3.0.0"
+"aws-cdk.asset-node-proxy-agent-v5" = ">=2.0.58,<3.0.0"
 constructs = ">=10.0.0,<11.0.0"
-jsii = ">=1.74.0,<2.0.0"
+jsii = ">=1.75.0,<2.0.0"
 publication = ">=0.0.3"
 typeguard = ">=2.13.3,<2.14.0"
 
@@ -767,22 +767,6 @@ files = [
 ]
 
 [[package]]
-name = "linz-logger"
-version = "0.11.0"
-description = "LINZ standard Logging format"
-category = "main"
-optional = true
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "linz_logger-0.11.0-py3-none-any.whl", hash = "sha256:1e8ef3f85a77e9506728a022e7b9b6b835c32a7d784ee8d78b6bb28755cc264a"},
-    {file = "linz_logger-0.11.0.tar.gz", hash = "sha256:7454e18f613b5aafbb38cad1478d48eab15bacd4d3fe8bb70fcc55f4ea139a6b"},
-]
-
-[package.dependencies]
-python-ulid = ">=1.1.0,<2.0.0"
-structlog = ">=22.1.0,<23.0.0"
-
-[[package]]
 name = "mccabe"
 version = "0.7.0"
 description = "McCabe checker, plugin for flake8"
@@ -1174,18 +1158,6 @@ files = [
 six = ">=1.5"
 
 [[package]]
-name = "python-ulid"
-version = "1.1.0"
-description = "Universally Unique Lexicographically Sortable Identifier"
-category = "main"
-optional = true
-python-versions = ">=3.7"
-files = [
-    {file = "python-ulid-1.1.0.tar.gz", hash = "sha256:5fb5e4a91db8ca93e8938a613360b3def299b60d41f847279a8c39c9b2e9c65e"},
-    {file = "python_ulid-1.1.0-py3-none-any.whl", hash = "sha256:88c952f6be133dbede19c907d72d26717d2691ec8421512b573144794d891e24"},
-]
-
-[[package]]
 name = "pyyaml"
 version = "6.0"
 description = "YAML parser and emitter for Python"
@@ -1292,6 +1264,7 @@ files = [
     {file = "ruamel.yaml.clib-0.2.7-cp310-cp310-win_amd64.whl", hash = "sha256:d000f258cf42fec2b1bbf2863c61d7b8918d31ffee905da62dede869254d3b8a"},
     {file = "ruamel.yaml.clib-0.2.7-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:045e0626baf1c52e5527bd5db361bc83180faaba2ff586e763d3d5982a876a9e"},
     {file = "ruamel.yaml.clib-0.2.7-cp311-cp311-macosx_12_6_arm64.whl", hash = "sha256:721bc4ba4525f53f6a611ec0967bdcee61b31df5a56801281027a3a6d1c2daf5"},
+    {file = "ruamel.yaml.clib-0.2.7-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:41d0f1fa4c6830176eef5b276af04c89320ea616655d01327d5ce65e50575c94"},
     {file = "ruamel.yaml.clib-0.2.7-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:4b3a93bb9bc662fc1f99c5c3ea8e623d8b23ad22f861eb6fce9377ac07ad6072"},
     {file = "ruamel.yaml.clib-0.2.7-cp36-cp36m-macosx_12_0_arm64.whl", hash = "sha256:a234a20ae07e8469da311e182e70ef6b199d0fbeb6c6cc2901204dd87fb867e8"},
     {file = "ruamel.yaml.clib-0.2.7-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:15910ef4f3e537eea7fe45f8a5d19997479940d9196f357152a09031c5be59f3"},
@@ -1359,24 +1332,6 @@ files = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
 ]
-
-[[package]]
-name = "structlog"
-version = "22.3.0"
-description = "Structured Logging for Python"
-category = "main"
-optional = true
-python-versions = ">=3.7"
-files = [
-    {file = "structlog-22.3.0-py3-none-any.whl", hash = "sha256:b403f344f902b220648fa9f286a23c0cc5439a5844d271fec40562dbadbc70ad"},
-    {file = "structlog-22.3.0.tar.gz", hash = "sha256:e7509391f215e4afb88b1b80fa3ea074be57a5a17d794bd436a5c949da023333"},
-]
-
-[package.extras]
-dev = ["structlog[docs,tests,typing]"]
-docs = ["furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-mermaid", "twisted"]
-tests = ["coverage[toml]", "freezegun (>=0.2.8)", "pretend", "pytest (>=6.0)", "pytest-asyncio (>=0.17)", "simplejson"]
-typing = ["mypy", "rich", "twisted"]
 
 [[package]]
 name = "toml"
@@ -1655,4 +1610,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "4d2711f9cef018298d5c20062455a2ffa23724ef426595b752bcea68c893d002"
+content-hash = "b0a4a8f3d04091bfb3aa17c7f2857c0e27dbb2e7999f8d338b68b6c7be8ccf70"
