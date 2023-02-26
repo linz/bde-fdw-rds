@@ -5,26 +5,23 @@ from stack.bde_fdw_rds_stack import Application
 
 app = cdk.App()
 
-# Parse user provided context for environment parameter (i.e. prod / non-prod)
-environment = app.node.try_get_context("environment")
-
-if environment not in ("prod", "non-prod"):
-    raise ValueError(f"Invalid deployment environment: “{environment}”. Available options: prod / non-prod")
-
 # Instantiate additional context specified in cdk.json based on environment type
-available_environments = app.node.try_get_context("available_environments")
-deployment_environment = available_environments.get(environment)
-aws_account = deployment_environment.get("account_id")
-aws_region = deployment_environment.get("region")
-aws_vpc_id = deployment_environment.get("vpc_id")
-aws_subnets = deployment_environment.get("subnets")
+environment = app.node.try_get_context("prod_env")
 
-rds_fdw_instance_type = deployment_environment.get("rds_fdw_instance_type")
+aws_account = environment.get("account_id")
+aws_region = environment.get("region")
+aws_vpc_id = environment.get("vpc_id")
+aws_subnets = environment.get("subnets")
+
+rds_fdw_instance_type = environment.get("rds_fdw_instance_type")
 
 cdk_env = cdk.Environment(account=aws_account, region=aws_region)
 
-bde_host_name = deployment_environment.get("bde_host_name")
-bde_analytics_user_secret = deployment_environment.get("bde_analytics_user_secret")
+bde_host_name = environment.get("bde_host_name")
+bde_analytics_user_secret = environment.get("bde_analytics_user_secret")
+
+bde_rds_security_group = environment.get("bde_rds_security_group")
+bastion_host_security_group = environment.get("bastion_host_security_group")
 
 
 Application(
@@ -37,6 +34,8 @@ Application(
     rds_fdw_instance_type=rds_fdw_instance_type,
     bde_host_name=bde_host_name,
     bde_analytics_user_secret=bde_analytics_user_secret,
+    bde_rds_security_group=bde_rds_security_group,
+    bastion_host_security_group=bastion_host_security_group,
 )
 
 

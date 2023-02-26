@@ -21,29 +21,16 @@
     "@aws-cdk/aws-events:eventsTargetQueueSameAccount": true,
     "@aws-cdk/aws-iam:standardizedServicePrincipals": true,
     "@aws-cdk/aws-ecs:disableExplicitDeploymentControllerForCircuitBreaker": true,
-    "available_environments": {
-      "prod": {
-        "account_id": "167241006131",
-        "region": "ap-southeast-2",
-        "vpc_id": "vpc-23487b47",
-        "subnets": ["subnet-51844336", "subnet-a6a85fef", "subnet-98f2a8c1"],
-        "rds_fdw_instance_type": { "class": "BURSTABLE3", "size": "SMALL" },
-        "bde_host": "bde-processor-db.cnta12almaey.ap-southeast-2.rds.amazonaws.com",
-        "bde_analytics_user_secret": "prod/bde/fdw_analytics"
-      },
-      "non-prod": {
-        "account_id": "750833841965",
-        "region": "ap-southeast-2",
-        "vpc_id": "vpc-0fb6a7defd5693aa8",
-        "subnets": [
-          "subnet-06ff7dbe6da04cdde",
-          "subnet-04865c78665fdf874",
-          "subnet-0e90f0bcba6cb7453"
-        ],
-        "rds_fdw_instance_type": { "class": "BURSTABLE3", "size": "MICRO" },
-        "bde_host": "bde-processor-db-test.cnta12almaey.ap-southeast-2.rds.amazonaws.com",
-        "bde_analytics_user_secret": "prod/bde/fdw_analytics"
-      }
+    "prod_env": {
+      "account_id": "167241006131",
+      "region": "ap-southeast-2",
+      "vpc_id": "vpc-23487b47",
+      "subnets": ["subnet-51844336", "subnet-a6a85fef", "subnet-98f2a8c1"],
+      "rds_fdw_instance_type": { "class": "BURSTABLE3", "size": "SMALL" },
+      "bde_host_name": "bde-processor-db.cnta12almaey.ap-southeast-2.rds.amazonaws.com",
+      "bde_analytics_user_secret": "prod/bde/fdw_analytics",
+      "bde_rds_security_group": "sg-09ff7858b47cce6d7",
+      "bastion_host_security_group": "sg-0d9a5d450c9125a28"
     }
   }
 }

@@ -12,8 +12,10 @@ class Application(Stack):
         vpc_id: str,
         subnet_ids: list[str],
         rds_fdw_instance_type: dict[str, str],
-        bde_host_name,
+        bde_host_name: str,
         bde_analytics_user_secret: str,
+        bde_rds_security_group: str,
+        bastion_host_security_group: str,
         **kwargs,
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
@@ -108,11 +110,19 @@ class Application(Stack):
         postgres_fdw_rds_root_cred_secret.grant_read(lambda_rds_init.role)  # type: ignore[arg-type]
         production_bde_rds_ro_user_cred.grant_read(lambda_rds_init.role)  # type: ignore[arg-type]
 
-        bastion_host_security_group = aws_ec2.SecurityGroup.from_security_group_id(
-            self, "Bastion Host Security Group", "sg-0d9a5d450c9125a28", mutable=False
+        postgres_fdw_rds_instance.connections.allow_from(lambda_rds_init, port_range=aws_ec2.Port.tcp(5432))
+
+        # Security group attached to production bde, allowing access from linz network
+        bde_rds_security_group_by_id = aws_ec2.SecurityGroup.from_lookup_by_id(
+            self, "Prod BDE Security Group", bde_rds_security_group
+        )
+        postgres_fdw_rds_instance.connections.allow_from(
+            bde_rds_security_group_by_id.connections, port_range=aws_ec2.Port.tcp(5432)
         )
 
-        postgres_fdw_rds_instance.connections.allow_from(lambda_rds_init, port_range=aws_ec2.Port.tcp(5432))
+        bastion_host_security_group_by_id = aws_ec2.SecurityGroup.from_lookup_by_id(
+            self, "Bastion Host Security Group", bastion_host_security_group
+        )
         postgres_fdw_rds_instance.connections.allow_from(
-            bastion_host_security_group.connections, port_range=aws_ec2.Port.tcp(5432)
+            bastion_host_security_group_by_id.connections, port_range=aws_ec2.Port.tcp(5432)
         )
