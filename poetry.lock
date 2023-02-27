@@ -1457,14 +1457,14 @@ test = ["black (>=22.3.0,<23.0.0)", "coverage (>=6.2,<7.0)", "isort (>=5.0.6,<6.
 
 [[package]]
 name = "types-psycopg2"
-version = "2.9.21.5"
+version = "2.9.21.7"
 description = "Typing stubs for psycopg2"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "types-psycopg2-2.9.21.5.tar.gz", hash = "sha256:93e436f5cc5e691f9f3004cef81675b8b5fab97689fc74d9d20f95bba80b3432"},
-    {file = "types_psycopg2-2.9.21.5-py3-none-any.whl", hash = "sha256:1757e5e9760aadc2d648d7b2a89d9733a1c5ee4ea6ef0d3fc90a7c4306556383"},
+    {file = "types-psycopg2-2.9.21.7.tar.gz", hash = "sha256:10358015a5f7bd96b4ca90b18da1e20783a73c2cd47392e794b0120929ec7d98"},
+    {file = "types_psycopg2-2.9.21.7-py3-none-any.whl", hash = "sha256:0e065f4f415df43c4955ae63250615cc468e86a28b8ee4e3014f514361e9047b"},
 ]
 
 [[package]]
