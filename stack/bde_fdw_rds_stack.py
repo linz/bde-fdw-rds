@@ -60,7 +60,8 @@ class Application(Stack):
                 getattr(aws_ec2.InstanceClass, rds_fdw_instance_type["class"]),
                 getattr(aws_ec2.InstanceSize, rds_fdw_instance_type["size"]),
             ),
-            allocated_storage=10,
+            allocated_storage=100,
+            max_allocated_storage=300,
             engine=aws_rds.DatabaseInstanceEngine.POSTGRES,
             credentials=aws_rds.Credentials.from_secret(postgres_fdw_rds_root_cred_secret, "postgres"),
             vpc=vpc,
@@ -81,11 +82,11 @@ class Application(Stack):
 
         # ----- Run rds init script from lambda -----
 
-        lambda_ = "rds_init"
-        lambda_working_dir = f"lambda_functions/.out/{lambda_}"
+        lambda_ref = "rds_init_script"
+        lambda_working_dir = f"lambda_functions/.out/{lambda_ref}"
 
-        lambda_pip_install_requirements(f"{lambda_working_dir}/packages", f"lambda_functions/{lambda_}/requirements.txt")
-        lambda_assets = zip_lambda_assets(lambda_working_dir, lambda_)
+        lambda_pip_install_requirements(f"{lambda_working_dir}/packages", f"lambda_functions/{lambda_ref}/requirements.txt")
+        lambda_assets = zip_lambda_assets(lambda_working_dir, lambda_ref)
 
         lambda_rds_init = triggers.TriggerFunction(
             self,

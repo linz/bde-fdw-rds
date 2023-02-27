@@ -25,10 +25,6 @@ rds_fdw_root_user = rds_fdw_root_secret["username"]  # type: ignore
 rds_fdw_root_pw = rds_fdw_root_secret["password"]  # type: ignore
 
 
-class DatabaseError(Exception):
-    pass
-
-
 # This lambda function is only meant to be run once during cdk initialization,
 # as post-db creation initialization script
 def handler(_event: dict[str, str], _context: LambdaContext) -> None:
