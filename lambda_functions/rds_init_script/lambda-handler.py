@@ -38,34 +38,39 @@ def handler(_event: dict[str, str], _context: LambdaContext) -> None:
     try:
         with conn.cursor() as cur:
             try:
-                cur.execute("CREATE EXTENSION postgis")
-                cur.execute("CREATE EXTENSION postgres_fdw")
+                cur.execute("CREATE EXTENSION IF NOT EXISTS postgis")
+                cur.execute("CREATE EXTENSION IF NOT EXISTS postgres_fdw")
 
                 cur.execute(
-                    "CREATE SERVER bde_processor FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host %s, port '5432', "
-                    "dbname 'bde', extensions 'postgis')",
+                    "CREATE SERVER IF NOT EXISTS bde_processor FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host %s, "
+                    "port '5432', dbname 'bde', extensions 'postgis', use_remote_estimate 'true')",
                     (bde_host_name,),
                 )
 
                 cur.execute("ALTER SERVER bde_processor OPTIONS (SET fetch_size '100000')")
 
                 cur.execute(
-                    "CREATE USER MAPPING FOR postgres SERVER bde_processor OPTIONS (user %s, password %s)",
+                    "CREATE USER MAPPING IF NOT EXISTS FOR postgres SERVER bde_processor OPTIONS (user %s, password %s)",
                     (bde_analytics_user_name, bde_analytics_user_pw),
                 )
 
+                cur.execute("DROP SCHEMA IF EXISTS bde cascade")
                 cur.execute("CREATE SCHEMA bde")
                 cur.execute("IMPORT FOREIGN SCHEMA bde FROM SERVER bde_processor INTO bde")
 
+                cur.execute("DROP SCHEMA IF EXISTS table_version cascade")
                 cur.execute("CREATE SCHEMA table_version")
                 cur.execute("IMPORT FOREIGN SCHEMA table_version FROM SERVER bde_processor INTO table_version")
 
+                cur.execute("DROP SCHEMA IF EXISTS lds cascade")
                 cur.execute("CREATE SCHEMA lds")
                 cur.execute("IMPORT FOREIGN SCHEMA lds FROM SERVER bde_processor INTO lds")
 
+                cur.execute("DROP SCHEMA IF EXISTS bde_ext cascade")
                 cur.execute("CREATE SCHEMA bde_ext")
                 cur.execute("IMPORT FOREIGN SCHEMA bde_ext FROM SERVER bde_processor INTO bde_ext")
 
+                cur.execute("DROP SCHEMA IF EXISTS bde_control cascade")
                 cur.execute("CREATE SCHEMA bde_control")
                 cur.execute("IMPORT FOREIGN SCHEMA bde_control FROM SERVER bde_processor INTO bde_control")
 
