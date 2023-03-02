@@ -1,4 +1,4 @@
-from aws_cdk import Duration, RemovalPolicy, Stack, aws_ec2, aws_lambda, aws_rds, aws_secretsmanager, triggers
+from aws_cdk import Duration, RemovalPolicy, Stack, aws_ec2, aws_iam, aws_lambda, aws_rds, aws_secretsmanager, triggers
 from constructs import Construct
 
 from stack.lambda_bundling import lambda_pip_install_requirements, zip_lambda_assets
@@ -51,6 +51,14 @@ class Application(Stack):
 
         postgres_fdw_rds_db_name = "bde_analytics"
 
+        bde_rds_security_group_by_id = aws_ec2.SecurityGroup.from_lookup_by_id(
+            self, "Prod BDE Security Group", bde_rds_security_group
+        )
+
+        bastion_host_security_group_by_id = aws_ec2.SecurityGroup.from_lookup_by_id(
+            self, "Bastion Host Security Group", bastion_host_security_group
+        )
+
         # Create postgres rds instance with fdw
         postgres_fdw_rds_instance = aws_rds.DatabaseInstance(
             self,
@@ -70,6 +78,8 @@ class Application(Stack):
             removal_policy=RemovalPolicy.DESTROY,
             deletion_protection=False,
             backup_retention=Duration.days(10),  # Retention period must be between 0 and 35
+            iam_authentication=True,
+            security_groups=[bde_rds_security_group_by_id, bastion_host_security_group_by_id],
         )
 
         # User with read-only permission to production bde needs to be created separately outside of this cdk.
@@ -113,17 +123,58 @@ class Application(Stack):
 
         postgres_fdw_rds_instance.connections.allow_from(lambda_rds_init, port_range=aws_ec2.Port.tcp(5432))
 
-        # Security group attached to production bde, allowing access from linz network
-        bde_rds_security_group_by_id = aws_ec2.SecurityGroup.from_lookup_by_id(
-            self, "Prod BDE Security Group", bde_rds_security_group
-        )
-        postgres_fdw_rds_instance.connections.allow_from(
-            bde_rds_security_group_by_id.connections, port_range=aws_ec2.Port.tcp(5432)
+        # ----- IAM role for analytics users -----
+
+        bde_analytics_group = aws_iam.Group(self, "BDE Analytics Group")
+        postgres_fdw_rds_instance.grant_connect(bde_analytics_group)
+
+        # ----- Lambda to create IAM user with rds access -----
+
+        lambda_ref = "create_rds_iam_user"
+        lambda_working_dir = f"lambda_functions/.out/{lambda_ref}"
+
+        lambda_pip_install_requirements(f"{lambda_working_dir}/packages", f"lambda_functions/{lambda_ref}/requirements.txt")
+        lambda_assets = zip_lambda_assets(lambda_working_dir, lambda_ref)
+
+        lambda_create_iam_user_role = aws_iam.Role(
+            self, "Create IAM User Role", assumed_by=aws_iam.ServicePrincipal("lambda.amazonaws.com")
         )
 
-        bastion_host_security_group_by_id = aws_ec2.SecurityGroup.from_lookup_by_id(
-            self, "Bastion Host Security Group", bastion_host_security_group
+        lambda_create_iam_user = aws_lambda.Function(
+            self,
+            "Create RDS User",
+            vpc=vpc,
+            vpc_subnets=vpc_subnets,
+            runtime=aws_lambda.Runtime.PYTHON_3_9,
+            handler="lambda-handler.handler",
+            timeout=Duration.minutes(10),  # Might take some time to connect to rds
+            code=aws_lambda.Code.from_asset(lambda_assets),
+            role=lambda_create_iam_user_role,
+            environment={
+                "RDS_FDW_HOST": postgres_fdw_rds_instance.db_instance_endpoint_address,
+                "RDS_FDW_DB": postgres_fdw_rds_db_name,
+                "RDS_FDW_ROOT": postgres_fdw_rds_root_cred_secret.secret_name,
+                "BDE_ANALYTICS_GROUP": bde_analytics_group.group_name,
+            },
         )
-        postgres_fdw_rds_instance.connections.allow_from(
-            bastion_host_security_group_by_id.connections, port_range=aws_ec2.Port.tcp(5432)
+
+        postgres_fdw_rds_root_cred_secret.grant_read(lambda_create_iam_user_role)
+
+        postgres_fdw_rds_instance.connections.allow_from(lambda_create_iam_user, port_range=aws_ec2.Port.tcp(5432))
+
+        lambda_create_iam_user_role.attach_inline_policy(
+            aws_iam.Policy(
+                self,
+                "Get and Add IAM User Policy",
+                statements=[
+                    aws_iam.PolicyStatement(
+                        actions=["iam:AddUserToGroup", "iam:CreateUser", "iam:TagUser"],
+                        resources=[f"arn:aws:iam::{Stack.account}:group/{bde_analytics_group.group_name}"],
+                    ),
+                    aws_iam.PolicyStatement(  # Broad iam resource needed since lambda needs to query all iam users.
+                        actions=["iam:GetUser"],
+                        resources=[f"arn:aws:iam::{Stack.account}:user/*"],
+                    ),
+                ],
+            )
         )

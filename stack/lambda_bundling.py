@@ -15,6 +15,7 @@ def lambda_pip_install_requirements(lambda_packaging_out_dir: str, requirements_
             "pip",
             "install",
             "--quiet",
+            "--disable-pip-version-check",
             "--force-reinstall",
             f"--target={lambda_packaging_out_dir}",
             f"--requirement={requirements_file}",
