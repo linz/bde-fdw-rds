@@ -20,9 +20,9 @@ rds_fdw_db = os.environ["RDS_FDW_DB"]
 
 rds_fdw_root_secret = parameters.get_secret(os.environ["RDS_FDW_ROOT"])
 
-rds_fdw_root_secret = json.loads(rds_fdw_root_secret)  # type: ignore
-rds_fdw_root_user = rds_fdw_root_secret["username"]  # type: ignore
-rds_fdw_root_pw = rds_fdw_root_secret["password"]  # type: ignore
+rds_fdw_root_secret_key_value = json.loads(rds_fdw_root_secret)  # type: ignore
+rds_fdw_root_user = rds_fdw_root_secret_key_value["username"]
+rds_fdw_root_pw = rds_fdw_root_secret_key_value["password"]
 
 
 # This lambda function is only meant to be run once during cdk initialization,
