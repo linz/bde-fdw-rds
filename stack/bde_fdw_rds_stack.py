@@ -123,11 +123,6 @@ class Application(Stack):
 
         postgres_fdw_rds_instance.connections.allow_from(lambda_rds_init, port_range=aws_ec2.Port.tcp(5432))
 
-        # ----- IAM role for analytics users -----
-
-        bde_analytics_group = aws_iam.Group(self, "BDE Analytics Group")
-        postgres_fdw_rds_instance.grant_connect(bde_analytics_group)
-
         # ----- Lambda to create IAM user with rds access -----
 
         lambda_ref = "create_rds_iam_user"
@@ -154,7 +149,6 @@ class Application(Stack):
                 "RDS_FDW_HOST": postgres_fdw_rds_instance.db_instance_endpoint_address,
                 "RDS_FDW_DB": postgres_fdw_rds_db_name,
                 "RDS_FDW_ROOT": postgres_fdw_rds_root_cred_secret.secret_name,
-                "BDE_ANALYTICS_GROUP": bde_analytics_group.group_name,
             },
         )
 
@@ -167,12 +161,8 @@ class Application(Stack):
                 self,
                 "Get and Add IAM User Policy",
                 statements=[
-                    aws_iam.PolicyStatement(
-                        actions=["iam:AddUserToGroup", "iam:CreateUser", "iam:TagUser"],
-                        resources=[f"arn:aws:iam::{Stack.account}:group/{bde_analytics_group.group_name}"],
-                    ),
                     aws_iam.PolicyStatement(  # Broad iam resource needed since lambda needs to query all iam users.
-                        actions=["iam:GetUser"],
+                        actions=["iam:GetUser", "iam:CreateUser", "iam:TagUser"],
                         resources=[f"arn:aws:iam::{Stack.account}:user/*"],
                     ),
                 ],
