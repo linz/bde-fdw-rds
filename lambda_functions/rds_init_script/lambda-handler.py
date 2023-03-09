@@ -43,7 +43,7 @@ def handler(_event: dict[str, str], _context: LambdaContext) -> None:
 
                 cur.execute(
                     "CREATE SERVER IF NOT EXISTS bde_processor FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host %s, "
-                    "port '5432', dbname 'bde', extensions 'postgis', use_remote_estimate 'true')",
+                    "port '5432', dbname 'bde', extensions 'postgis')",
                     (bde_host_name,),
                 )
 
