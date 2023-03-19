@@ -128,14 +128,14 @@ typeguard = ">=2.13.3,<2.14.0"
 
 [[package]]
 name = "aws-lambda-powertools"
-version = "2.9.1"
+version = "2.10.0"
 description = "AWS Lambda Powertools is a developer toolkit to implement Serverless best practices and increase developer velocity."
 category = "main"
 optional = false
 python-versions = ">=3.7.4,<4.0.0"
 files = [
-    {file = "aws_lambda_powertools-2.9.1-py3-none-any.whl", hash = "sha256:4d3c810898919ffb195d7f3b159d04838b8b0bb2fc66a12d88698f9f2c0325ac"},
-    {file = "aws_lambda_powertools-2.9.1.tar.gz", hash = "sha256:1140245e86d9afcaf50e7332aec43302b0685b64461dbd190da3560e9181dfb3"},
+    {file = "aws_lambda_powertools-2.10.0-py3-none-any.whl", hash = "sha256:92a20e6ab834208745dd667e1906c524c487fc0ccdec68e687d0498a611e10a4"},
+    {file = "aws_lambda_powertools-2.10.0.tar.gz", hash = "sha256:3b6c83dd6c5a446a257777aef38720ba08ab88136d4461c6ad753db7276ae507"},
 ]
 
 [package.dependencies]
@@ -1631,4 +1631,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "a1a67ba6037924cc2241836018ff3f7d15286476beace02b50dfe477c1c949a1"
+content-hash = "c27218eef045532cb899dfd02a06bd4fd79dbe72ad5b94b45b6b60a0c7af60c8"
