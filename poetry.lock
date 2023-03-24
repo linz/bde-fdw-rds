@@ -398,14 +398,14 @@ testing = ["flake8", "pytest", "pytest-cov", "pytest-virtualenv", "pytest-xdist"
 
 [[package]]
 name = "constructs"
-version = "10.1.287"
+version = "10.1.288"
 description = "A programming model for software-defined state"
 category = "main"
 optional = false
 python-versions = "~=3.7"
 files = [
-    {file = "constructs-10.1.287-py3-none-any.whl", hash = "sha256:8969e9e2919a9ba155bec5ec2b5a5ff26a1503d0c6986b64ed77c7b9470f0d57"},
-    {file = "constructs-10.1.287.tar.gz", hash = "sha256:21a8e4c8d15d7f71a25b2100e33dfe211b757a0f3c658e6f39d9bcd992ce94c1"},
+    {file = "constructs-10.1.288-py3-none-any.whl", hash = "sha256:0ce4fdfab11fa8812ee69c058dcb8fb244a210ac3d636eff1cc3ef84a3612ad0"},
+    {file = "constructs-10.1.288.tar.gz", hash = "sha256:6c7543d9d423931c4efc07cc310ba8e025f412a0ddfebb76a7f34111b64971bb"},
 ]
 
 [package.dependencies]
