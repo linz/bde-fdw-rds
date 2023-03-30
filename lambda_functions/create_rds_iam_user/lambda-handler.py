@@ -10,6 +10,7 @@ from psycopg2 import Error, connect, sql
 # ----- Environment Variables -----
 rds_fdw_host = os.environ["RDS_FDW_HOST"]
 rds_fdw_db = os.environ["RDS_FDW_DB"]
+rds_resource_id = os.environ["RDS_FDW_RESOURCE_ID"]
 
 rds_fdw_root_secret = parameters.get_secret(os.environ["RDS_FDW_ROOT"])
 
@@ -24,8 +25,9 @@ if TYPE_CHECKING:
     client: IAMClient = boto3.client("iam")
 else:
     client = boto3.client("iam")
-
-
+# ref https://toitutewhenua.atlassian.net/wiki/spaces/AR/pages/80216093/Option+Analysis+AWS+RDS+Database+Authentication
+# may fail if the ROLE/USER exist, need to check
+# Create a schema for the user.
 def create_rds_user_from_iam(username: str) -> None:
     conn = connect(
         host=rds_fdw_host,
@@ -70,7 +72,9 @@ def ensure_iam_user_exists(username: str, iam_policy_arn: str) -> None:
 
 def generate_iam_user_policy(username: str) -> str:
     # Resource arn needs to be specific to a particular user to prevent individuals from connecting as another user.
-    resource_arn = f"arn:aws:rds:ap-southeast-2:167241006131:db:{rds_fdw_host}/{username}"
+    # https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html
+    # we should use the "rds-db" prefix and resource id.
+    resource_arn = f"arn:aws:rds-db:ap-southeast-2:167241006131:dbuser:{rds_resource_id}/{username}"
 
     iam_user_policy_document = {
         "Version": "2012-10-17",

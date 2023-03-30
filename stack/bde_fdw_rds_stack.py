@@ -149,6 +149,7 @@ class Application(Stack):
                 "RDS_FDW_HOST": postgres_fdw_rds_instance.db_instance_endpoint_address,
                 "RDS_FDW_DB": postgres_fdw_rds_db_name,
                 "RDS_FDW_ROOT": postgres_fdw_rds_root_cred_secret.secret_name,
+                "RDS_FDW_RESOURCE_ID": postgres_fdw_rds_instance.instance_identifier
             },
         )
 
