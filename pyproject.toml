@@ -44,7 +44,7 @@ python = "^3.9"
 typer = "*"
 aws-cdk-lib = "*"
 constructs = "*"
-aws-lambda-powertools = "2.10.0"
+aws-lambda-powertools = "2.11.0"
 psycopg2-binary = "2.9.5"
 
 [tool.poetry.dev-dependencies]
