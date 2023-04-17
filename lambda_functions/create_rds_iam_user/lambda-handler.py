@@ -1,6 +1,6 @@
 import json
 import os
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import boto3
 from aws_lambda_powertools.utilities import parameters
@@ -12,9 +12,9 @@ rds_fdw_host = os.environ["RDS_FDW_HOST"]
 rds_fdw_db = os.environ["RDS_FDW_DB"]
 rds_resource_id = os.environ["RDS_FDW_RESOURCE_ID"]
 
-rds_fdw_root_secret = parameters.get_secret(os.environ["RDS_FDW_ROOT"])
+rds_fdw_root_secret: Any = parameters.get_secret(os.environ["RDS_FDW_ROOT"])
 
-rds_fdw_root_secret_key_value = json.loads(rds_fdw_root_secret)  # type: ignore
+rds_fdw_root_secret_key_value = json.loads(rds_fdw_root_secret)
 rds_fdw_root_user = rds_fdw_root_secret_key_value["username"]
 rds_fdw_root_pw = rds_fdw_root_secret_key_value["password"]
 
