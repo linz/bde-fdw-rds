@@ -51,7 +51,9 @@ def handler(_event: dict[str, str], _context: LambdaContext) -> None:
                     (bde_host_name,),
                 )
 
-                cur.execute("ALTER SERVER bde_processor OPTIONS (SET fetch_size '100000')")
+                cur.execute(
+                    "ALTER SERVER bde_processor OPTIONS (SET fetch_size '100000')"
+                )
 
                 cur.execute(
                     "CREATE USER MAPPING FOR postgres SERVER bde_processor OPTIONS (user %s, password %s)",
