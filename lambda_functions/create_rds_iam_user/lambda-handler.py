@@ -25,9 +25,8 @@ if TYPE_CHECKING:
     client: IAMClient = boto3.client("iam")
 else:
     client = boto3.client("iam")
-# ref https://toitutewhenua.atlassian.net/wiki/spaces/AR/pages/80216093/Option+Analysis+AWS+RDS+Database+Authentication
-# may fail if the ROLE/USER exist, need to check
-# Create a schema for the user.
+
+
 def create_rds_user_from_iam(username: str) -> None:
     conn = connect(
         host=rds_fdw_host,
