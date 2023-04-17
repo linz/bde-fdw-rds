@@ -128,14 +128,14 @@ typeguard = ">=2.13.3,<2.14.0"
 
 [[package]]
 name = "aws-lambda-powertools"
-version = "2.12.0"
+version = "2.13.0"
 description = "AWS Lambda Powertools is a developer toolkit to implement Serverless best practices and increase developer velocity."
 category = "main"
 optional = false
 python-versions = ">=3.7.4,<4.0.0"
 files = [
-    {file = "aws_lambda_powertools-2.12.0-py3-none-any.whl", hash = "sha256:38bc650bf082f5877efdb49cf8bcd419c2538d57a3bad2a51c7c9bdb6011340f"},
-    {file = "aws_lambda_powertools-2.12.0.tar.gz", hash = "sha256:e77e37fb0f6763ad8f397e0edd49e9657fd9f381475e877b2b0ca78667c53b98"},
+    {file = "aws_lambda_powertools-2.13.0-py3-none-any.whl", hash = "sha256:f40f56ae605d8f81cfa38c88aa35f2d2d702b62130b738f4512215972cdd6e9c"},
+    {file = "aws_lambda_powertools-2.13.0.tar.gz", hash = "sha256:d15bc36b2607791e6f25901eacf5f9cc83fc986dd329231f96fd6af8a7f62953"},
 ]
 
 [package.dependencies]
@@ -398,14 +398,14 @@ testing = ["flake8", "pytest", "pytest-cov", "pytest-virtualenv", "pytest-xdist"
 
 [[package]]
 name = "constructs"
-version = "10.1.309"
+version = "10.1.310"
 description = "A programming model for software-defined state"
 category = "main"
 optional = false
 python-versions = "~=3.7"
 files = [
-    {file = "constructs-10.1.309-py3-none-any.whl", hash = "sha256:3127067e99151d1094b05443452bc9f84c685a719c00031c7b5e55e294e0deb7"},
-    {file = "constructs-10.1.309.tar.gz", hash = "sha256:cbc36a68187d4c9dd33b46b87aac2dda469bfda95c37d4c198bd98911064dce8"},
+    {file = "constructs-10.1.310-py3-none-any.whl", hash = "sha256:5b774ca021e5889be2bb8e17fd8e536de656a832edeef901f46172b5bc857f01"},
+    {file = "constructs-10.1.310.tar.gz", hash = "sha256:c9b7d5841d3c9d414dd85e3b148d77e882cc1ec216f01e02bd9b295ada4f9171"},
 ]
 
 [package.dependencies]
@@ -1621,4 +1621,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "88cddb33566f84fbd2227058082f7d73b761859c9351f56ea9c32dc0f4b62559"
+content-hash = "af8e1a81f3fa0bc502741055732f66febba955b7639e7ea017c7e5edb01d3993"
