@@ -21,10 +21,13 @@ rds_fdw_root_pw = rds_fdw_root_secret_key_value["password"]
 
 if TYPE_CHECKING:
     from mypy_boto3_iam import IAMClient
+    from mypy_boto3_sts import STSClient
 
-    client: IAMClient = boto3.client("iam")
+    boto3_iam_client: IAMClient = boto3.client("iam")
+    boto3_sts_client: STSClient = boto3.client("sts")
 else:
-    client = boto3.client("iam")
+    boto3_iam_client = boto3.client("iam")
+    boto3_sts_client = boto3.client("sts")
 
 
 def create_rds_user_from_iam(username: str) -> None:
@@ -60,27 +63,27 @@ def create_rds_user_from_iam(username: str) -> None:
 
 def ensure_iam_user_exists(username: str, iam_policy_arn: str) -> None:
     try:
-        client.get_user(UserName=username)
-    except client.exceptions.NoSuchEntityException:
-        client.create_user(
+        boto3_iam_client.get_user(UserName=username)
+    except boto3_iam_client.exceptions.NoSuchEntityException:
+        boto3_iam_client.create_user(
             UserName=username,
         )
-    client.attach_role_policy(RoleName=username, PolicyArn=iam_policy_arn)
-    client.tag_user(UserName=username, Tags=[{"Key": "BDE_Analytics_User", "Value": "True"}])
+    boto3_iam_client.attach_role_policy(RoleName=username, PolicyArn=iam_policy_arn)
+    boto3_iam_client.tag_user(UserName=username, Tags=[{"Key": "BDE_Analytics_User", "Value": "True"}])
 
 
 def generate_iam_user_policy(username: str) -> str:
     # Resource arn needs to be specific to a particular user to prevent individuals from connecting as another user.
     # https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html
-    # we should use the "rds-db" prefix and resource id.
-    resource_arn = f"arn:aws:rds-db:ap-southeast-2:167241006131:dbuser:{rds_resource_id}/{username}"
+    aws_account_id = boto3_sts_client.get_caller_identity()["Account"]
+    resource_arn = f"arn:aws:rds-db:ap-southeast-2:{aws_account_id}:dbuser:{rds_resource_id}/{username}"
 
     iam_user_policy_document = {
         "Version": "2012-10-17",
         "Statement": [{"Action": "rds-db:connect", "Resource": resource_arn, "Effect": "Allow"}],
     }
 
-    response = client.create_policy(
+    response = boto3_iam_client.create_policy(
         PolicyName=f"bde-analytics-iam-policy-{username}",
         Path="bde-analytics-policies",
         PolicyDocument=json.dumps(iam_user_policy_document),

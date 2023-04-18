@@ -64,7 +64,7 @@ typed-ast = "*"
 types-psycopg2 = "*"
 
 [tool.poetry.group.dev.dependencies]
-boto3-stubs = {version = "*", extras = ["iam"]}
+boto3-stubs = {version = "*", extras = ["iam", "sts"]}
 
 [tool.pylint.FORMAT]
 max-line-length = 127
