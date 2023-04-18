@@ -41,6 +41,20 @@ def create_rds_user_from_iam(username: str) -> None:
     sql_create_user = sql.SQL("CREATE ROLE {username} WITH LOGIN").format(
         username=sql.Identifier(username),
     )
+    sql_user_create_schema = sql.SQL("CREATE SCHEMA {username}").format(
+        username=sql.Identifier(username),
+    )
+    sql_user_grant_schema_usage = sql.SQL("GRANT USAGE ON SCHEMA {username} TO {username}").format(
+        username=sql.Identifier(username),
+    )
+    sql_user_grant_schema_privileges = sql.SQL(
+        "GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA {username} TO {username}"
+    ).format(
+        username=sql.Identifier(username),
+    )
+    sql_user_grant_schema_execute = sql.SQL("GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA {username} TO {username}").format(
+        username=sql.Identifier(username),
+    )
     sql_grant_iam_role = sql.SQL("GRANT rds_iam TO {username}").format(
         username=sql.Identifier(username),
     )
@@ -49,6 +63,10 @@ def create_rds_user_from_iam(username: str) -> None:
         with conn.cursor() as cur:
             try:
                 cur.execute(sql_create_user)
+                cur.execute(sql_user_create_schema)
+                cur.execute(sql_user_grant_schema_usage)
+                cur.execute(sql_user_grant_schema_privileges)
+                cur.execute(sql_user_grant_schema_execute)
                 cur.execute(sql_grant_iam_role)
 
             except Error:
