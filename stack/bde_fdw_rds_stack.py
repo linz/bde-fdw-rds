@@ -9,6 +9,7 @@ class Application(Stack):
         self,
         scope: Construct,
         construct_id: str,
+        aws_account: str,
         vpc_id: str,
         subnet_ids: list[str],
         rds_fdw_instance_type: dict[str, str],
@@ -164,7 +165,7 @@ class Application(Stack):
                 statements=[
                     aws_iam.PolicyStatement(  # Broad iam resource needed since lambda needs to query all iam users.
                         actions=["iam:GetUser", "iam:CreateUser", "iam:TagUser"],
-                        resources=[f"arn:aws:iam::{Stack.account}:user/*"],
+                        resources=[f"arn:aws:iam::{aws_account}:user/*"],
                     ),
                 ],
             )
