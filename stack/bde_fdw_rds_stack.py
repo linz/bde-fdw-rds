@@ -158,12 +158,23 @@ class Application(Stack):
 
         postgres_fdw_rds_instance.connections.allow_from(lambda_create_iam_user, port_range=aws_ec2.Port.tcp(5432))
 
+        # https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html
+        lambda_create_iam_user_role.add_managed_policy(
+            # Looking up AWSLambdaVPCAccessExecutionRole from from_managed_policy_name returns 404,
+            # likely due to AWS locating this policy under service-role
+            aws_iam.ManagedPolicy.from_managed_policy_arn(
+                self,
+                id="AWSLambdaVPCAccessExecutionRole",
+                managed_policy_arn="arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole",
+            )
+        )
         lambda_create_iam_user_role.attach_inline_policy(
             aws_iam.Policy(
                 self,
                 "Get and Add IAM User Policy",
                 statements=[
                     aws_iam.PolicyStatement(  # Broad iam resource needed since lambda needs to query all iam users.
+                        effect=aws_iam.Effect.ALLOW,
                         actions=["iam:GetUser", "iam:CreateUser", "iam:TagUser"],
                         resources=[f"arn:aws:iam::{aws_account}:user/*"],
                     ),
