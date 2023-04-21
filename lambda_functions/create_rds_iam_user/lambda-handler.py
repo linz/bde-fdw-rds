@@ -86,7 +86,7 @@ def ensure_iam_user_exists(username: str, iam_policy_arn: str) -> None:
         boto3_iam_client.create_user(
             UserName=username,
         )
-    boto3_iam_client.attach_role_policy(RoleName=username, PolicyArn=iam_policy_arn)
+    boto3_iam_client.attach_user_policy(UserName=username, PolicyArn=iam_policy_arn)
     boto3_iam_client.tag_user(UserName=username, Tags=[{"Key": "BDE_Analytics_User", "Value": "True"}])
 
 
@@ -103,7 +103,7 @@ def generate_iam_user_policy(username: str) -> str:
 
     response = boto3_iam_client.create_policy(
         PolicyName=f"bde-analytics-iam-policy-{username}",
-        Path="bde-analytics-policies",
+        Path="/bde-analytics-policies/",
         PolicyDocument=json.dumps(iam_user_policy_document),
         Description="IAM policy allowing user access to bde analytics.",
     )

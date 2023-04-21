@@ -178,6 +178,11 @@ class Application(Stack):
                         actions=["iam:GetUser", "iam:CreateUser", "iam:TagUser"],
                         resources=[f"arn:aws:iam::{aws_account}:user/*"],
                     ),
+                    aws_iam.PolicyStatement(
+                        effect=aws_iam.Effect.ALLOW,
+                        actions=["iam:CreatePolicy", "iam:AttachUserPolicy"],
+                        resources=[f"arn:aws:iam::{aws_account}:*"],
+                    ),
                 ],
             )
         )
