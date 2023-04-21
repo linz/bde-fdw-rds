@@ -1,4 +1,15 @@
-from aws_cdk import Duration, RemovalPolicy, Stack, aws_ec2, aws_iam, aws_lambda, aws_rds, aws_secretsmanager, triggers
+from aws_cdk import (
+    Duration,
+    RemovalPolicy,
+    Stack,
+    aws_ec2,
+    aws_iam,
+    aws_lambda,
+    aws_rds,
+    aws_secretsmanager,
+    custom_resources,
+    triggers,
+)
 from constructs import Construct
 
 from stack.lambda_bundling import lambda_pip_install_requirements, zip_lambda_assets
@@ -91,6 +102,24 @@ class Application(Stack):
             secret_name=bde_analytics_user_secret,
         )
 
+        # https://github.com/aws/aws-cdk/issues/11851
+        postgres_fdw_rds_resource_id = custom_resources.AwsCustomResource(
+            self,
+            id="Postgres FDW RDS Resource ID",
+            on_create=custom_resources.AwsSdkCall(
+                service="RDS",
+                action="describeDBInstances",
+                parameters={
+                    "DBInstanceIdentifier": postgres_fdw_rds_instance.instance_identifier,
+                },
+                physical_resource_id=custom_resources.PhysicalResourceId.from_response("DBInstances.0.DbiResourceId"),
+                output_paths=["DBInstances.0.DbiResourceId"],
+            ),
+            policy=custom_resources.AwsCustomResourcePolicy.from_sdk_calls(
+                resources=custom_resources.AwsCustomResourcePolicy.ANY_RESOURCE,
+            ),
+        )
+
         # ----- Run rds init script from lambda -----
 
         lambda_ref = "rds_init_script"
@@ -150,12 +179,12 @@ class Application(Stack):
                 "RDS_FDW_HOST": postgres_fdw_rds_instance.db_instance_endpoint_address,
                 "RDS_FDW_DB": postgres_fdw_rds_db_name,
                 "RDS_FDW_ROOT": postgres_fdw_rds_root_cred_secret.secret_name,
-                "RDS_FDW_RESOURCE_ID": postgres_fdw_rds_instance.instance_identifier,
+                "RDS_FDW_RESOURCE_ID": postgres_fdw_rds_resource_id.get_response_field("DBInstances.0.DbiResourceId"),
             },
         )
 
         postgres_fdw_rds_root_cred_secret.grant_read(lambda_create_iam_user_role)
-
+        postgres_fdw_rds_instance.grant_connect(lambda_create_iam_user)
         postgres_fdw_rds_instance.connections.allow_from(lambda_create_iam_user, port_range=aws_ec2.Port.tcp(5432))
 
         # https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html
