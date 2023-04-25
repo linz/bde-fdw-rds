@@ -29,6 +29,7 @@ Application(
     "BdeFdwRdsStack",
     description="Provision AWS Postgres RDS with FDW, to query BDE Processor RDS.",
     env=cdk_env,
+    aws_account=aws_account,
     vpc_id=aws_vpc_id,
     subnet_ids=aws_subnets,
     rds_fdw_instance_type=rds_fdw_instance_type,

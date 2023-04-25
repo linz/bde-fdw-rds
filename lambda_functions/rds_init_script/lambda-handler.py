@@ -20,13 +20,9 @@ rds_fdw_db = os.environ["RDS_FDW_DB"]
 
 rds_fdw_root_secret = parameters.get_secret(os.environ["RDS_FDW_ROOT"])
 
-rds_fdw_root_secret = json.loads(rds_fdw_root_secret)  # type: ignore
-rds_fdw_root_user = rds_fdw_root_secret["username"]  # type: ignore
-rds_fdw_root_pw = rds_fdw_root_secret["password"]  # type: ignore
-
-
-class DatabaseError(Exception):
-    pass
+rds_fdw_root_secret_key_value = json.loads(rds_fdw_root_secret)  # type: ignore
+rds_fdw_root_user = rds_fdw_root_secret_key_value["username"]
+rds_fdw_root_pw = rds_fdw_root_secret_key_value["password"]
 
 
 # This lambda function is only meant to be run once during cdk initialization,
@@ -42,34 +38,39 @@ def handler(_event: dict[str, str], _context: LambdaContext) -> None:
     try:
         with conn.cursor() as cur:
             try:
-                cur.execute("CREATE EXTENSION postgis")
-                cur.execute("CREATE EXTENSION postgres_fdw")
+                cur.execute("CREATE EXTENSION IF NOT EXISTS postgis")
+                cur.execute("CREATE EXTENSION IF NOT EXISTS postgres_fdw")
 
                 cur.execute(
-                    "CREATE SERVER bde_processor FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host %s, port '5432', "
-                    "dbname 'bde', extensions 'postgis')",
+                    "CREATE SERVER IF NOT EXISTS bde_processor FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host %s, "
+                    "port '5432', dbname 'bde', extensions 'postgis')",
                     (bde_host_name,),
                 )
 
-                cur.execute("ALTER SERVER bde_processor OPTIONS (SET fetch_size '100000')")
+                cur.execute("ALTER SERVER bde_processor OPTIONS (ADD fetch_size '100000')")
 
                 cur.execute(
-                    "CREATE USER MAPPING FOR postgres SERVER bde_processor OPTIONS (user %s, password %s)",
+                    "CREATE USER MAPPING IF NOT EXISTS FOR postgres SERVER bde_processor OPTIONS (user %s, password %s)",
                     (bde_analytics_user_name, bde_analytics_user_pw),
                 )
 
+                cur.execute("DROP SCHEMA IF EXISTS bde cascade")
                 cur.execute("CREATE SCHEMA bde")
                 cur.execute("IMPORT FOREIGN SCHEMA bde FROM SERVER bde_processor INTO bde")
 
+                cur.execute("DROP SCHEMA IF EXISTS table_version cascade")
                 cur.execute("CREATE SCHEMA table_version")
                 cur.execute("IMPORT FOREIGN SCHEMA table_version FROM SERVER bde_processor INTO table_version")
 
+                cur.execute("DROP SCHEMA IF EXISTS lds cascade")
                 cur.execute("CREATE SCHEMA lds")
                 cur.execute("IMPORT FOREIGN SCHEMA lds FROM SERVER bde_processor INTO lds")
 
+                cur.execute("DROP SCHEMA IF EXISTS bde_ext cascade")
                 cur.execute("CREATE SCHEMA bde_ext")
                 cur.execute("IMPORT FOREIGN SCHEMA bde_ext FROM SERVER bde_processor INTO bde_ext")
 
+                cur.execute("DROP SCHEMA IF EXISTS bde_control cascade")
                 cur.execute("CREATE SCHEMA bde_control")
                 cur.execute("IMPORT FOREIGN SCHEMA bde_control FROM SERVER bde_processor INTO bde_control")
 

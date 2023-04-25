@@ -15,6 +15,7 @@ def lambda_pip_install_requirements(lambda_packaging_out_dir: str, requirements_
             "pip",
             "install",
             "--quiet",
+            "--disable-pip-version-check",
             "--force-reinstall",
             f"--target={lambda_packaging_out_dir}",
             f"--requirement={requirements_file}",
@@ -32,7 +33,7 @@ def zip_directory(directory: str, zipfile_handle: zipfile.ZipFile) -> None:
 def zip_lambda_assets(lambda_working_dir: str, lambda_directory: str) -> str:
     packaged_lambda = f"{lambda_working_dir}/{lambda_directory}.zip"
 
-    with zipfile.ZipFile(packaged_lambda, "w") as zipped_lambda_assets:
+    with zipfile.ZipFile(packaged_lambda, "w", zipfile.ZIP_DEFLATED) as zipped_lambda_assets:
         # python packages
         zip_directory(f"{lambda_working_dir}/packages", zipped_lambda_assets)
         # lambda code
