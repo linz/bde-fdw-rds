@@ -23,11 +23,11 @@ if TYPE_CHECKING:
     from mypy_boto3_iam import IAMClient
     from mypy_boto3_sts import STSClient
 
-    boto3_iam_client: IAMClient = boto3.client("iam")
-    boto3_sts_client: STSClient = boto3.client("sts")
 else:
-    boto3_iam_client = boto3.client("iam")
-    boto3_sts_client = boto3.client("sts")
+    IAMClient = STSClient = dict
+
+boto3_iam_client: IAMClient = boto3.client("iam")
+boto3_sts_client: STSClient = boto3.client("sts")
 
 
 def create_rds_user_from_iam(username: str) -> None:
