@@ -45,7 +45,7 @@ typer = "*"
 aws-cdk-lib = "*"
 constructs = "*"
 boto3 = "*"
-aws-lambda-powertools = "2.14.0"
+aws-lambda-powertools = "2.14.1"
 psycopg2-binary = "2.9.6"
 
 [tool.poetry.dev-dependencies]
